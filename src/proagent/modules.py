@@ -17,11 +17,13 @@ def _get_shared_model(model_name):
         from transformers import AutoModelForCausalLM, AutoTokenizer
 
         repo_id = HF_MODEL_MAP.get(model_name, model_name)
-        rprint(f"[green][HF][/green]: loading {repo_id} ...")
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        rprint(f"[green][HF][/green]: loading {repo_id} on {device} ...")
         tokenizer = AutoTokenizer.from_pretrained(repo_id)
         model = AutoModelForCausalLM.from_pretrained(
-            repo_id, torch_dtype="auto", device_map="auto"
-        )
+            repo_id, torch_dtype=torch.float16 if device == "cuda" else torch.float32
+        ).to(device)
+        model.eval()
         _MODEL_CACHE[model_name] = (tokenizer, model)
     return _MODEL_CACHE[model_name]
 

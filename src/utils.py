@@ -5,6 +5,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 try:
     import tensorflow as tf
     from tensorflow.python.saved_model import tag_constants
+    tf.config.set_visible_devices([], 'GPU')
 except Exception:
     tf = None
     tag_constants = None

@@ -520,7 +520,7 @@ class ProMediumLevelAgent(ProAgent):
 
 		state_message = {"role": "user", "content": state_prompt}
 		self.planner.current_user_message = state_message
-		response = self.planner.query(key=self.openai_api_key(), stop='Scene', trace = self.trace)
+		response = self.planner.query(key=self.openai_api_key(), stop='\nScene', trace = self.trace)
 		
 		if 'wait' not in response:
 			self.planner.add_msg_to_dialog_history(state_message) 
