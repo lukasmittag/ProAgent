@@ -2,7 +2,6 @@ import random
 import time
 
 import numpy as np
-import openai
 
 
 from overcooked_ai_py.mdp.actions import Action, Direction
@@ -79,7 +78,7 @@ def retry_with_exponential_backoff(
         exponential_base: float = 2,
         jitter: bool = True,
         max_retries: int = 10,
-        errors: tuple = (openai.error.RateLimitError,),
+        errors: tuple = (),
 ):
 
     def wrapper(*args, **kwargs):

@@ -180,7 +180,7 @@ def find_path(start_pos_and_or, other_pos_and_or, goal, terrain_mtx):
     
     # no available plans. 
     if last_node is None: 
-        return None, np.Inf 
+        return None, np.inf 
     else: 
         previous_node = last_node        
         while (previous_node.parent is not None) and (previous_node.parent != start_node): 

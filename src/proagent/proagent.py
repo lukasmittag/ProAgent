@@ -1,7 +1,15 @@
 import itertools, os, json, re
 from collections import defaultdict
 import numpy as np
-import pkg_resources
+from importlib.metadata import version as _pkg_version
+
+class _PkgResources:
+    def get_distribution(self, name):
+        class _Dist:
+            def __init__(self, v): self.version = v
+        return _Dist(_pkg_version(name))
+
+pkg_resources = _PkgResources()
 import sys 
 import copy 
 from .modules import Module
@@ -120,6 +128,8 @@ class ProMediumLevelAgent(ProAgent):
 			model_name = "gpt"
 		elif "claude" in self.model:
 			model_name = "claude"
+		else:
+			model_name = "gpt"
 	
 		if module_name == "planner":
 			prompt_file = os.path.join(PROMPT_DIR, model_name, module_name, self.prompt_level, f'{self.layout}_{self.agent_index}.{file_type}')
@@ -765,7 +775,7 @@ class ProMediumLevelAgent(ProAgent):
 		Chooses motion goal that has the lowest cost action plan.
 		Returns the motion goal itself and the first action on the plan.
 		"""
-		min_cost = np.Inf
+		min_cost = np.inf
 		best_action, best_goal = None, None
 		for goal in motion_goals:
 			action_plan, _, plan_cost = self.mlam.motion_planner.get_plan(
@@ -783,7 +793,7 @@ class ProMediumLevelAgent(ProAgent):
 		Chooses motion goal that has the lowest cost action plan.
 		Returns the motion goal itself and the first action on the plan.
 		"""   
-		min_cost = np.Inf
+		min_cost = np.inf
 		best_action, best_goal = None, None
 		for goal in motion_goals:   
 			action_plan, plan_cost = self.real_time_planner(

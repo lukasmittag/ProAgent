@@ -1,8 +1,13 @@
 import numpy as np
-import tensorflow as tf
-from tensorflow.python.saved_model import tag_constants
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+try:
+    import tensorflow as tf
+    from tensorflow.python.saved_model import tag_constants
+except Exception:
+    tf = None
+    tag_constants = None
 
 from overcooked_ai_py.mdp.actions import Direction, Action
 from overcooked_ai_py.mdp.overcooked_mdp import OvercookedGridworld, OvercookedState
@@ -16,7 +21,11 @@ from overcooked_ai_py.utils import load_dict_from_file, load_pickle
 from proagent.proagent import ProMediumLevelAgent
 
 from collections import defaultdict
-from stable_baselines import GAIL
+
+try:
+    from stable_baselines import GAIL
+except Exception:
+    GAIL = None
 
 
 BC_SAVE_DIR = "../models/bc_runs/"
