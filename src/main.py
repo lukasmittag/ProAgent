@@ -157,7 +157,8 @@ def main(variant):
 
         print(f"This is {log_dir}")
         if p0_algo == "ProAgent"  or p1_algo == "ProAgent":
-            json_file = f"{log_dir}/results_{episode}_{horizon}_{gpt_model}_{prompt_level}_{retrival_method}_{K}.json"
+            safe_model = gpt_model.replace(":", "-").replace("/", "-")
+            json_file = f"{log_dir}/results_{episode}_{horizon}_{safe_model}_{prompt_level}_{retrival_method}_{K}.json"
         else:
             json_file = f"{log_dir}/results_{episode}_{horizon}.json"
         with open(json_file, "w") as f:
